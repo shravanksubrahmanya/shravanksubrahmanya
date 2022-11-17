@@ -2,7 +2,11 @@ Hi ![](https://user-images.githubusercontent.com/18350557/176309783-0785949b-912
 ===
 Software Developer
 ------------------
-I am a Software Developer who loves Software Development. I have experience in programming Internet of Things, Web development, Python development and Web development using Django Framework.* 🌍  I'm based in Bengaluru, India* ✉️  You can contact me at [anotheruserdead@gmail.com](mailto:anotheruserdead@gmail.com)* 🧠  I'm learning Django Framework* 🤝  I'm open to collaborating on Python, Django, Machine Learning, Data Science related projects.* ⚡  I am Omnipresent
+I am a Software Developer who loves Software Development. I have experience in programming Internet of Things, Web development, Python development and Web development using Django Framework.
+* 🌍  I'm based in Bengaluru, India
+* 🧠  I'm learning Django Framework
+* 🤝  I'm open to collaborating on Python, Django, Machine Learning, Data Science related projects.
+* ⚡  I am Omnipresent
 
 ### Skills
 
