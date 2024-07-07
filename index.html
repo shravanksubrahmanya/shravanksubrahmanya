@@ -26,6 +26,7 @@
       color: #ffffff;
       border-radius: 50px;
       padding: 10px 20px;
+      transition: background-color 0.3s, border-color 0.3s;
     }
     .btn-custom:hover {
       background-color: #155ab6;
@@ -41,6 +42,10 @@
       border: none;
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       border-radius: 10px;
+      transition: box-shadow 0.3s;
+    }
+    .card:hover {
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
     }
     .card-title, .card-text {
       color: #333333;
@@ -60,6 +65,22 @@
       color: #1a73e8;
       margin-right: 10px;
     }
+    .header-bar {
+      background-color: #1a73e8;
+      color: #ffffff;
+      padding: 10px 0;
+      text-align: center;
+    }
+    .header-bar h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    .list-unstyled li:hover {
+      background-color: #e0e0e0;
+    }
+    .list-unstyled li {
+      padding: 5px 0;
+    }
   </style>
 </head>
 <body>
@@ -68,13 +89,14 @@
     <a class="navbar-brand" href="#">Shravan K S</a>
   </nav>
 
+  <div class="header-bar">
+    <h1>Software Engineer</h1>
+  </div>
+
   <div class="container mt-5">
     <div class="text-center mb-5">
-      <img src="your_logo.png" alt="Logo" class="mb-3" style="width: 150px; height: 150px; border-radius: 50%;">
       <h1>Shravan K S</h1>
-      <p class="lead">Software Engineer</p>
-      <p>Innovative Software Engineer skilled in React JS, Python, and Azure AI. Full-Stack Developer crafting user-friendly interfaces and scalable architectures.</p>
-      <a href="https://shravanksubrahmanya.github.io/shravanksubrahmanya" class="btn btn-custom">View Portfolio</a>
+      <p class="lead">Innovative Software Engineer skilled in React JS, Python, and Azure AI. Full-Stack Developer crafting user-friendly interfaces and scalable architectures.</p>
     </div>
 
     <div class="row">
@@ -104,7 +126,6 @@
         <h2 class="section-title">Contact</h2>
         <p><i class="fas fa-envelope icon"></i> shravanksubrahmanya@gmail.com</p>
         <p><i class="fab fa-linkedin icon"></i> <a href="https://linkedin.com/in/shravan-k-s-4a04ba155" target="_blank">LinkedIn</a></p>
-        <p><i class="fas fa-briefcase icon"></i> <a href="https://shravanksubrahmanya.github.io/shravanksubrahmanya" target="_blank">Portfolio</a></p>
       </div>
     </div>
 
@@ -166,7 +187,7 @@
   </div>
 
   <footer class="footer mt-5">
-    <p>&copy; 2023 Shravan K S. All rights reserved.</p>
+    <p>&copy; 2023 Shravan K S. All rights reserved. | <a href="https://linkedin.com/in/shravan-k-s-4a04ba155" target="_blank">LinkedIn</a></p>
   </footer>
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
