@@ -24,10 +24,12 @@ function App() {
       >
         <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
         <MobileMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-        <Home />
-        <About />
-        <Projects />
-        <Contact />
+        <main className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <Home />
+          <About />
+          <Projects />
+          <Contact />
+        </main>
       </div>
     </>
   );

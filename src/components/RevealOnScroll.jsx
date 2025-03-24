@@ -15,7 +15,8 @@ export const RevealOnScroll = ({ children }) => {
 
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
-  });
+  }, []);
+
   return (
     <div ref={ref} className="reveal">
       {children}
