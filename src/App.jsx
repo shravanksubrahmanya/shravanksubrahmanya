@@ -10,6 +10,7 @@ import { About } from "./components/sections/About";
 import { Projects } from "./components/sections/Projects";
 import { Contact } from "./components/sections/Contact";
 import { Github } from "./components/sections/Github";
+import { Blogs } from "./components/sections/Blogs";
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -29,6 +30,7 @@ function App() {
           <Home />
           <About />
           <Projects />
+          <Blogs />
           <Github />
           <Contact />
         </main>

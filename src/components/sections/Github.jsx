@@ -42,6 +42,9 @@ export const Github = () => {
       className="min-h-screen flex flex-col items-center justify-center py-20 px-4 sm:px-6 lg:px-8"
     >
       <div className="max-w-lg w-full bg-white/5 border border-white/10 rounded-lg p-6 text-center mb-8">
+        <h2 className="text-3xl sm:text-4xl font-bold mb-8 bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent text-center">
+          Github Contributions
+        </h2>
         <img
           src={githubData.avatar_url}
           alt={`${githubData.name}'s avatar`}

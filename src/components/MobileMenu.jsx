@@ -20,22 +20,24 @@ export const MobileMenu = ({ menuOpen, setMenuOpen }) => {
         &times;
       </button>
       <nav className="flex flex-col items-center space-y-4">
-        {["Home", "About", "Projects", "Contact"].map((section) => (
-          <a
-            key={section}
-            href={`#${section.toLowerCase()}`}
-            onClick={() => setMenuOpen(false)}
-            className={`text-2xl font-semibold text-white transform transition-transform duration-300
+        {["Home", "About", "Projects", "Blogs", "GitHub", "Contact"].map(
+          (section) => (
+            <a
+              key={section}
+              href={`#${section.toLowerCase()}`}
+              onClick={() => setMenuOpen(false)}
+              className={`text-2xl font-semibold text-white transform transition-transform duration-300
               ${
                 menuOpen
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-5"
               }
             `}
-          >
-            {section}
-          </a>
-        ))}
+            >
+              {section}
+            </a>
+          )
+        )}
       </nav>
     </div>
   );
