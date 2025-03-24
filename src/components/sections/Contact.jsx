@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { RevealOnScroll } from "../RevealOnScroll";
 import emailjs from "@emailjs/browser";
+import { FaLinkedin, FaMedium, FaGithub, FaTwitter } from "react-icons/fa";
+import { SiUdemy, SiOrcid } from "react-icons/si";
 
 export const Contact = () => {
   const [formData, setFormData] = useState({
@@ -30,7 +32,7 @@ export const Contact = () => {
   return (
     <section
       id="contact"
-      className="min-h-screen flex items-center justify-center py-20 px-4 sm:px-6 lg:px-8"
+      className="min-h-screen flex flex-col items-center justify-center py-20 px-4 sm:px-6 lg:px-8"
     >
       <RevealOnScroll>
         <div className="max-w-lg w-full">
@@ -78,6 +80,57 @@ export const Contact = () => {
               Send Message
             </button>
           </form>
+          {/* Icons in a single responsive row */}
+          <div className="mt-8 w-full flex flex-row justify-center items-center space-x-6 overflow-x-auto">
+            <a
+              href="https://www.linkedin.com/in/shravan-k-s-4a04ba155/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+            >
+              <FaLinkedin className="text-blue-500 hover:text-blue-400 transition text-2xl md:text-4xl lg:text-5xl" />
+            </a>
+            <a
+              href="https://medium.com/@shravanksubrahmanya"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Medium"
+            >
+              <FaMedium className="text-white hover:text-gray-200 transition text-2xl md:text-4xl lg:text-5xl" />
+            </a>
+            <a
+              href="https://github.com/shravanksubrahmanya"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+            >
+              <FaGithub className="text-white hover:text-gray-300 transition text-2xl md:text-4xl lg:text-5xl" />
+            </a>
+            <a
+              href="https://x.com/S_K_Subrahmanya"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter"
+            >
+              <FaTwitter className="text-blue-400 hover:text-blue-300 transition text-2xl md:text-4xl lg:text-5xl" />
+            </a>
+            <a
+              href="https://www.udemy.com/user/shravan-k-s-sks/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Udemy"
+            >
+              <SiUdemy className="text-red-600 hover:text-red-500 transition text-2xl md:text-4xl lg:text-5xl" />
+            </a>
+            <a
+              href="https://orcid.org/0009-0006-3595-0382"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="ORCID"
+            >
+              <SiOrcid className="text-green-500 hover:text-green-400 transition text-2xl md:text-4xl lg:text-5xl" />
+            </a>
+          </div>
         </div>
       </RevealOnScroll>
     </section>

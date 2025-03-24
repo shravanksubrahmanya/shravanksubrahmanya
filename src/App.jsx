@@ -11,6 +11,7 @@ import { Projects } from "./components/sections/Projects";
 import { Contact } from "./components/sections/Contact";
 import { Github } from "./components/sections/Github";
 import { Blogs } from "./components/sections/Blogs";
+import { Footer } from "./components/Footer";
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -33,6 +34,7 @@ function App() {
           <Blogs />
           <Github />
           <Contact />
+          <Footer />
         </main>
       </div>
     </>
