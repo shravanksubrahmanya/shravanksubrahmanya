@@ -39,10 +39,34 @@ body {
 .reveal {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.7s ease transform 0.7s ease;
+  transition: opacity 0.7s ease, transform 0.7s ease;
 }
 
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+  .reveal {
+    transform: translateY(10px);
+  }
+}
+
+form {
+  max-width: 100%;
+  width: 80%;
+  margin: 0 auto;
+}
+
+@media (max-width: 480px) {
+  form {
+    width: 75%;
+  }
 }
