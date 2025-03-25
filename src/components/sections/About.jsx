@@ -1,27 +1,91 @@
 import { RevealOnScroll } from "../RevealOnScroll";
+import {
+  SiReact,
+  SiJavascript,
+  SiHtml5,
+  SiCss3,
+  SiJquery,
+  SiTailwindcss,
+  SiBootstrap,
+  SiPython,
+  SiNodedotjs,
+  SiExpress,
+  SiFastapi,
+  SiDjango,
+  SiFlask,
+  SiMongodb,
+  SiMysql,
+  SiPostgresql,
+} from "react-icons/si";
+import {
+  FaDatabase,
+  FaCloud,
+  FaTable,
+  FaBrain,
+  FaSearch,
+  FaLink,
+  FaCog,
+  FaRobot,
+} from "react-icons/fa";
 
 export const About = () => {
-  const frontendSkills = [
-    "React",
-    "Javascript",
-    "HTML",
-    "CSS",
-    "JQuery",
-    "Tailwind",
-    "Bootstrap",
+  // Frontend technologies
+  const frontendTech = [
+    { name: "React", icon: SiReact },
+    { name: "Javascript", icon: SiJavascript },
+    { name: "HTML", icon: SiHtml5 },
+    { name: "CSS", icon: SiCss3 },
+    { name: "jQuery", icon: SiJquery },
+    { name: "Tailwind", icon: SiTailwindcss },
+    { name: "Bootstrap", icon: SiBootstrap },
   ];
 
-  const backendSkills = [
-    "Python",
-    "Nodejs",
-    "Expressjs",
-    "FastApi",
-    "Django",
-    "Flask",
-    "MongoDb",
-    "CosmosDb",
-    "Azure",
+  // Backend technologies (excluding database-specific ones)
+  const backendTech = [
+    { name: "Python", icon: SiPython },
+    { name: "Node.js", icon: SiNodedotjs },
+    { name: "Express.js", icon: SiExpress },
+    { name: "FastAPI", icon: SiFastapi },
+    { name: "Django", icon: SiDjango },
+    { name: "Flask", icon: SiFlask },
   ];
+
+  // Database technologies
+  const databaseTech = [
+    { name: "MySQL", icon: SiMysql },
+    { name: "PostgreSQL", icon: SiPostgresql },
+    { name: "MongoDB", icon: SiMongodb },
+    { name: "Azure Cosmos DB", icon: FaDatabase },
+    { name: "Azure Blob Storage", icon: FaCloud },
+    { name: "Azure Table Storage", icon: FaTable },
+  ];
+
+  // AI Development technologies
+  const aiTech = [
+    { name: "Azure AI Services", icon: FaBrain },
+    { name: "Azure AI Search", icon: FaSearch },
+    { name: "LangChain", icon: FaLink },
+    { name: "Semantic-Kernel", icon: FaCog },
+    { name: "OpenAI", icon: FaRobot },
+  ];
+
+  // Common icon classes for smooth transitions and responsive sizes
+  const iconClasses =
+    "transition duration-300 ease-in-out transform hover:scale-110 text-4xl md:text-5xl lg:text-6xl text-white";
+
+  // Wrapper for each tech icon with its label
+  const TechIcon = ({ tech }) => {
+    const IconComponent = tech.icon;
+    return (
+      <div
+        className="flex flex-col items-center cursor-pointer"
+        title={tech.name}
+      >
+        <IconComponent className={iconClasses} />
+        <span className="mt-2 text-sm text-white">{tech.name}</span>
+      </div>
+    );
+  };
 
   return (
     <section
@@ -41,32 +105,42 @@ export const About = () => {
               in crafting user-friendly interfaces and designing scalable
               architectures.
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="rounded-xl hover:translate-y-1 transition-all">
-                <h3 className="text-xl font-bold mb-4">Frontend</h3>
-                <div className="flex flex-wrap gap-2">
-                  {frontendSkills.map((tech, key) => (
-                    <span
-                      key={key}
-                      className="bg-blue-500/10 text-blue-500 py-1 px-3 rounded-full text-sm hover:bg-blue-500/20 hover:shadow-[0_2px_8px_rgba(59,130,246,0.2)] transition"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
+            {/* Frontend Section */}
+            <div className="mb-10">
+              <h3 className="text-2xl font-bold mb-4 text-center">Frontend</h3>
+              <div className="flex flex-wrap justify-center items-center gap-6">
+                {frontendTech.map((tech, index) => (
+                  <TechIcon key={index} tech={tech} />
+                ))}
               </div>
-              <div className="rounded-xl hover:translate-y-1 transition-all">
-                <h3 className="text-xl font-bold mb-4">Backend</h3>
-                <div className="flex flex-wrap gap-2">
-                  {backendSkills.map((tech, key) => (
-                    <span
-                      key={key}
-                      className="bg-blue-500/10 text-blue-500 py-1 px-3 rounded-full text-sm hover:bg-blue-500/20 hover:shadow-[0_2px_8px_rgba(59,130,246,0.2)] transition"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
+            </div>
+            {/* Backend Section */}
+            <div className="mb-10">
+              <h3 className="text-2xl font-bold mb-4 text-center">Backend</h3>
+              <div className="flex flex-wrap justify-center items-center gap-6">
+                {backendTech.map((tech, index) => (
+                  <TechIcon key={index} tech={tech} />
+                ))}
+              </div>
+            </div>
+            {/* Database Section */}
+            <div className="mb-10">
+              <h3 className="text-2xl font-bold mb-4 text-center">Database</h3>
+              <div className="flex flex-wrap justify-center items-center gap-6">
+                {databaseTech.map((tech, index) => (
+                  <TechIcon key={index} tech={tech} />
+                ))}
+              </div>
+            </div>
+            {/* AI Development Section */}
+            <div>
+              <h3 className="text-2xl font-bold mb-4 text-center">
+                AI Development
+              </h3>
+              <div className="flex flex-wrap justify-center items-center gap-6">
+                {aiTech.map((tech, index) => (
+                  <TechIcon key={index} tech={tech} />
+                ))}
               </div>
             </div>
           </div>
