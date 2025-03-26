@@ -50,7 +50,7 @@ export const Projects = () => {
         <div className="flex gap-2">
           <button
             onClick={() => openModal(project)}
-            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
+            className="bg-blue-500 text-white py-2 sm:py-3 px-4 sm:px-6 rounded font-medium transition relative overflow-hidden hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]"
           >
             View Details
           </button>
@@ -59,7 +59,7 @@ export const Projects = () => {
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-gray-700 text-white py-2 px-4 rounded hover:bg-gray-600 transition"
+              className="border border-blue-500/50 text-blue-500 py-2 sm:py-3 px-4 sm:px-6 rounded font-medium transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(59,130,246,0.2)] hover:bg-blue-500/10"
             >
               View Project
             </a>
@@ -108,35 +108,48 @@ export const Projects = () => {
 
       {/* Modal Popup */}
       {selectedProject && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-gray-900 p-6 rounded-lg max-w-xl w-full relative">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50">
+          <div className="relative bg-gradient-to-br from-gray-800 to-gray-900 border border-white/10 shadow-2xl p-6 rounded-lg max-w-xl w-full">
+            {/* Close Button */}
             <button
               onClick={closeModal}
-              className="absolute top-2 right-2 text-white text-xl"
+              className="absolute top-3 right-3 text-2xl text-gray-300 hover:text-red-400 transition-colors"
             >
               &times;
             </button>
-            <h3 className="text-2xl font-bold mb-4">{selectedProject.title}</h3>
+
+            {/* Modal Title */}
+            <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent">
+              {selectedProject.title}
+            </h3>
+
+            {/* Project Type / Company */}
             {selectedProject.type && (
               <p className="text-sm text-gray-400 mb-2">
                 {selectedProject.type}
                 {selectedProject.company && ` - ${selectedProject.company}`}
               </p>
             )}
-            <p className="text-gray-400 mb-4">
+
+            {/* Brief Description */}
+            <p className="text-gray-300 mb-4">
               {selectedProject.briefDescription}
             </p>
+
+            {/* Detailed Description */}
             {selectedProject.detailedDescription && (
               <div
-                className="text-gray-400 mb-4"
+                className="text-gray-300 mb-4 leading-relaxed"
                 dangerouslySetInnerHTML={{
                   __html: selectedProject.detailedDescription,
                 }}
               />
             )}
+
+            {/* Technologies */}
             {selectedProject.technologies && (
               <div className="mb-4">
-                <h4 className="font-bold mb-2">Technologies:</h4>
+                <h4 className="font-bold mb-2 text-white">Technologies:</h4>
                 <div className="flex flex-wrap gap-2">
                   {selectedProject.technologies.map((tech, key) => (
                     <span
@@ -149,10 +162,12 @@ export const Projects = () => {
                 </div>
               </div>
             )}
+
+            {/* Learnings */}
             {selectedProject.learnings && (
               <div>
-                <h4 className="font-bold mb-2">Learnings:</h4>
-                <p>{selectedProject.learnings}</p>
+                <h4 className="font-bold mb-2 text-white">Learnings:</h4>
+                <p className="text-gray-300">{selectedProject.learnings}</p>
               </div>
             )}
           </div>
