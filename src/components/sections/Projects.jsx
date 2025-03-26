@@ -1,7 +1,6 @@
-// Projects.jsx
 import React, { useState } from "react";
 import { RevealOnScroll } from "../RevealOnScroll";
-import { projectData } from "./projectData"; // import the data
+import { projectData } from "./projectData";
 
 export const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
@@ -12,6 +11,9 @@ export const Projects = () => {
   );
   const personalProjects = projectData.filter(
     (project) => project.type && project.type.toLowerCase().includes("personal")
+  );
+  const academicProjects = projectData.filter(
+    (project) => project.type && project.type.toLowerCase().includes("academic")
   );
 
   const openModal = (project) => {
@@ -35,6 +37,7 @@ export const Projects = () => {
             {project.type}
             {project.company && ` - ${project.company}`}
             {project.client && ` (Client: ${project.client})`}
+            {project.institution && ` - ${project.institution}`}
           </p>
         )}
         <p className="text-gray-400 mb-4">{project.briefDescription}</p>
@@ -76,13 +79,12 @@ export const Projects = () => {
       className="min-h-screen flex flex-col items-center justify-center py-20 w-full"
     >
       <RevealOnScroll>
-        {/* Outer container with responsive widths/padding */}
         <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl sm:text-4xl font-bold mb-8 bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent text-center">
             Featured Projects
           </h2>
 
-          {/* Company (Official) Projects */}
+          {/* Company Projects */}
           {companyProjects.length > 0 && (
             <div className="mb-12">
               <h3 className="text-2xl font-semibold text-white/90 mb-4">
@@ -94,7 +96,19 @@ export const Projects = () => {
             </div>
           )}
 
-          {/* Personal (Side) Projects */}
+          {/* Academic Projects */}
+          {academicProjects.length > 0 && (
+            <div className="mb-12">
+              <h3 className="text-2xl font-semibold text-white/90 mb-4">
+                Academic Projects
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {renderProjectCards(academicProjects)}
+              </div>
+            </div>
+          )}
+
+          {/* Personal Projects */}
           {personalProjects.length > 0 && (
             <div>
               <h3 className="text-2xl font-semibold text-white/90 mb-4">
@@ -110,22 +124,8 @@ export const Projects = () => {
 
       {/* Modal Popup */}
       {selectedProject && (
-        <div
-          className="
-            fixed inset-0 bg-black/50 backdrop-blur-sm z-50 
-            flex items-center justify-center 
-            px-4 sm:px-6
-          "
-        >
-          {/* Modal container with max height, scroll if needed */}
-          <div
-            className="
-              relative bg-gradient-to-br from-gray-800 to-gray-900 
-              border border-white/10 shadow-2xl p-6 rounded-lg 
-              max-w-xl w-full mx-auto
-              max-h-[90vh] overflow-y-auto
-            "
-          >
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center px-4 sm:px-6">
+          <div className="relative bg-gradient-to-br from-gray-800 to-gray-900 border border-white/10 shadow-2xl p-6 rounded-lg max-w-xl w-full mx-auto max-h-[90vh] overflow-y-auto">
             <button
               onClick={closeModal}
               className="absolute top-3 right-3 text-2xl text-gray-300 hover:text-red-400 transition-colors"
@@ -141,6 +141,9 @@ export const Projects = () => {
                 {selectedProject.company && ` - ${selectedProject.company}`}
                 {selectedProject.client &&
                   ` (Client: ${selectedProject.client})`}
+                {selectedProject.institution &&
+                  ` - ${selectedProject.institution}`}
+                {selectedProject.guide && ` (Guide: ${selectedProject.guide})`}
               </p>
             )}
             <p className="text-gray-300 mb-4">
