@@ -167,7 +167,7 @@ export const Projects = () => {
       {/* Modal Popup */}
       {selectedProject && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center px-4 sm:px-6">
-          <div className="relative bg-gradient-to-br from-gray-800 to-gray-900 border border-white/10 shadow-2xl p-6 rounded-lg max-w-xl w-full mx-auto max-h-[90vh] overflow-y-auto">
+          <div className="relative bg-gradient-to-br from-gray-800 to-gray-900 border border-white/10 shadow-2xl p-6 rounded-lg w-11/12 sm:max-w-xl mx-auto max-h-[90vh] overflow-y-auto">
             <button
               onClick={closeModal}
               className="absolute top-3 right-3 text-2xl text-gray-300 hover:text-red-400 transition-colors"
