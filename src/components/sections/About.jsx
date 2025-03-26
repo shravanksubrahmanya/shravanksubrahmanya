@@ -40,7 +40,7 @@ export const About = () => {
     { name: "Bootstrap", icon: SiBootstrap },
   ];
 
-  // Backend technologies (excluding database-specific ones)
+  // Backend technologies
   const backendTech = [
     { name: "Python", icon: SiPython },
     { name: "Node.js", icon: SiNodedotjs },
@@ -105,6 +105,13 @@ export const About = () => {
               in crafting user-friendly interfaces and designing scalable
               architectures.
             </p>
+
+            {/* NEW paragraph before listing technologies */}
+            <p className="text-gray-300 mb-10 text-center">
+              Over the years, I have worked with a variety of technologies. Here
+              are some of the technologies I have experience with:
+            </p>
+
             {/* Frontend Section */}
             <div className="mb-10">
               <h3 className="text-2xl font-bold mb-4 text-center">Frontend</h3>
@@ -114,6 +121,7 @@ export const About = () => {
                 ))}
               </div>
             </div>
+
             {/* Backend Section */}
             <div className="mb-10">
               <h3 className="text-2xl font-bold mb-4 text-center">Backend</h3>
@@ -123,6 +131,7 @@ export const About = () => {
                 ))}
               </div>
             </div>
+
             {/* Database Section */}
             <div className="mb-10">
               <h3 className="text-2xl font-bold mb-4 text-center">Database</h3>
@@ -132,6 +141,7 @@ export const About = () => {
                 ))}
               </div>
             </div>
+
             {/* AI Development Section */}
             <div>
               <h3 className="text-2xl font-bold mb-4 text-center">
