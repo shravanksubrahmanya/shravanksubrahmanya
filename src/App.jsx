@@ -12,6 +12,7 @@ import { Contact } from "./components/sections/Contact";
 import { Github } from "./components/sections/Github";
 import { Blogs } from "./components/sections/Blogs";
 import { Footer } from "./components/Footer";
+import { Education } from "./components/sections/Education";
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -30,6 +31,7 @@ function App() {
         <main className="container mx-auto px-4 sm:px-6 lg:px-8">
           <Home />
           <About />
+          <Education />
           <Projects />
           <Blogs />
           <Github />

@@ -4,8 +4,9 @@ import { RevealOnScroll } from "../RevealOnScroll";
 export const Home = () => {
   const titles = [
     "Shravan K Subrahmanya",
-    "a Software Engineer",
     "an AI Engineer",
+    "a Software Engineer",
+    "a Curious Mind",
     "an Enthusiast",
   ];
 
