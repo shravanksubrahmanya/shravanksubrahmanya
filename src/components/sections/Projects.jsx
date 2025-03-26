@@ -1,7 +1,7 @@
 // Projects.jsx
 import React, { useState } from "react";
 import { RevealOnScroll } from "../RevealOnScroll";
-import { projectData } from "./projectData"; // <-- import the data
+import { projectData } from "./projectData"; // import the updated data
 
 export const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
@@ -30,12 +30,16 @@ export const Projects = () => {
         className="p-6 rounded-xl border border-white/10 hover:-translate-y-1 hover:border-blue-500/30 hover:shadow-lg transition"
       >
         <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+
+        {/* Type / Company / Client */}
         {project.type && (
           <p className="text-sm text-gray-400 mb-2">
             {project.type}
             {project.company && ` - ${project.company}`}
+            {project.client && ` (Client: ${project.client})`}
           </p>
         )}
+
         <p className="text-gray-400 mb-4">{project.briefDescription}</p>
         <div className="flex flex-wrap gap-2 mb-4">
           {project.technologies?.map((tech, key) => (
@@ -110,33 +114,26 @@ export const Projects = () => {
       {selectedProject && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50">
           <div className="relative bg-gradient-to-br from-gray-800 to-gray-900 border border-white/10 shadow-2xl p-6 rounded-lg max-w-xl w-full">
-            {/* Close Button */}
             <button
               onClick={closeModal}
               className="absolute top-3 right-3 text-2xl text-gray-300 hover:text-red-400 transition-colors"
             >
               &times;
             </button>
-
-            {/* Modal Title */}
             <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent">
               {selectedProject.title}
             </h3>
-
-            {/* Project Type / Company */}
             {selectedProject.type && (
               <p className="text-sm text-gray-400 mb-2">
                 {selectedProject.type}
                 {selectedProject.company && ` - ${selectedProject.company}`}
+                {selectedProject.client &&
+                  ` (Client: ${selectedProject.client})`}
               </p>
             )}
-
-            {/* Brief Description */}
             <p className="text-gray-300 mb-4">
               {selectedProject.briefDescription}
             </p>
-
-            {/* Detailed Description */}
             {selectedProject.detailedDescription && (
               <div
                 className="text-gray-300 mb-4 leading-relaxed"
@@ -145,8 +142,6 @@ export const Projects = () => {
                 }}
               />
             )}
-
-            {/* Technologies */}
             {selectedProject.technologies && (
               <div className="mb-4">
                 <h4 className="font-bold mb-2 text-white">Technologies:</h4>
@@ -162,8 +157,6 @@ export const Projects = () => {
                 </div>
               </div>
             )}
-
-            {/* Learnings */}
             {selectedProject.learnings && (
               <div>
                 <h4 className="font-bold mb-2 text-white">Learnings:</h4>
