@@ -39,6 +39,14 @@ export const Contact = () => {
           <h2 className="text-3xl sm:text-4xl font-bold mb-8 bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent text-center">
             Get In Touch
           </h2>
+
+          {/* Introductory Text */}
+          <p className="text-gray-300 text-center mb-8">
+            I’m always eager to explore new opportunities and take on exciting
+            projects. If you have a project in mind, or just want to say hi,
+            feel free to send me a message.
+          </p>
+
           <form className="space-y-6" onSubmit={handleSubmit}>
             <input
               type="text"
@@ -80,6 +88,7 @@ export const Contact = () => {
               Send Message
             </button>
           </form>
+
           {/* Icons in a single responsive row */}
           <div className="mt-8 w-full flex flex-row justify-center items-center space-x-6 overflow-x-auto">
             <a
