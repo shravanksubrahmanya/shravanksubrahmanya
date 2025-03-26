@@ -13,6 +13,7 @@ import { Github } from "./components/sections/Github";
 import { Blogs } from "./components/sections/Blogs";
 import { Footer } from "./components/Footer";
 import { Education } from "./components/sections/Education";
+import { Experience } from "./components/sections/Experience";
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -32,6 +33,7 @@ function App() {
           <Home />
           <About />
           <Education />
+          <Experience />
           <Projects />
           <Blogs />
           <Github />
