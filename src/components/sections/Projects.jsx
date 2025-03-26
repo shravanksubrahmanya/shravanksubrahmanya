@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { RevealOnScroll } from "../RevealOnScroll";
 import { projectData } from "./projectData";
+import { FiEye, FiArrowRight } from "react-icons/fi";
 
 export const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
@@ -24,14 +25,14 @@ export const Projects = () => {
     setSelectedProject(null);
   };
 
-  // Reusable component to render project cards
+  // Reusable component to render project cards with original theme
   const renderProjectCards = (projects) => {
     return projects.map((project) => (
       <div
         key={project.id}
         className="p-6 rounded-xl border border-white/10 hover:-translate-y-1 hover:border-blue-500/30 hover:shadow-lg transition"
       >
-        <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+        <h3 className="text-xl font-bold mb-2 text-white">{project.title}</h3>
         {project.type && (
           <p className="text-sm text-gray-400 mb-2">
             {project.type}
@@ -51,21 +52,22 @@ export const Projects = () => {
             </span>
           ))}
         </div>
-        <div className="flex gap-2">
-          <button
+        <div className="flex gap-4">
+          <span
             onClick={() => openModal(project)}
-            className="bg-blue-500 text-white py-2 sm:py-3 px-4 sm:px-6 rounded font-medium transition relative overflow-hidden hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]"
+            className="flex items-center gap-1 text-green-500 cursor-pointer transition-transform duration-300 hover:scale-105 hover:text-green-400 text-base font-medium"
           >
-            View Details
-          </button>
+            View Details <FiEye className="transition-transform duration-300" />
+          </span>
           {project.githubUrl && (
             <a
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="border border-blue-500/50 text-blue-500 py-2 sm:py-3 px-4 sm:px-6 rounded font-medium transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(59,130,246,0.2)] hover:bg-blue-500/10"
+              className="flex items-center gap-1 text-green-500 transition-transform duration-300 hover:scale-105 hover:text-green-400 text-base font-medium"
             >
-              View Project
+              View Project{" "}
+              <FiArrowRight className="transition-transform duration-300" />
             </a>
           )}
         </div>
@@ -126,7 +128,7 @@ export const Projects = () => {
               href="https://github.com/shravanksubrahmanya"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-500 hover:underline text-lg font-medium transition"
+              className="flex items-center justify-center gap-2 text-blue-300 transition-transform duration-300 hover:scale-105 hover:text-blue-200 text-lg font-medium"
             >
               View More Projects →
             </a>
@@ -182,6 +184,12 @@ export const Projects = () => {
                     </span>
                   ))}
                 </div>
+              </div>
+            )}
+            {selectedProject.learnings && (
+              <div>
+                <h4 className="font-bold mb-2 text-white">Learnings:</h4>
+                <p className="text-gray-300">{selectedProject.learnings}</p>
               </div>
             )}
           </div>
