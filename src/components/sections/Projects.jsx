@@ -77,12 +77,67 @@ const projectData = [
 export const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
 
+  // Separate the projects by type
+  const companyProjects = projectData.filter(
+    (project) => project.type && project.type.toLowerCase().includes("company")
+  );
+  const personalProjects = projectData.filter(
+    (project) => project.type && project.type.toLowerCase().includes("personal")
+  );
+
   const openModal = (project) => {
     setSelectedProject(project);
   };
 
   const closeModal = () => {
     setSelectedProject(null);
+  };
+
+  // Reusable component to render project cards
+  const renderProjectCards = (projects) => {
+    return projects.map((project) => (
+      <div
+        key={project.id}
+        className="p-6 rounded-xl border border-white/10 hover:-translate-y-1 hover:border-blue-500/30 hover:shadow-lg transition"
+      >
+        <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+        {project.type && (
+          <p className="text-sm text-gray-400 mb-2">
+            {project.type}
+            {project.company && ` - ${project.company}`}
+          </p>
+        )}
+        <p className="text-gray-400 mb-4">{project.briefDescription}</p>
+        <div className="flex flex-wrap gap-2 mb-4">
+          {project.technologies?.map((tech, key) => (
+            <span
+              key={key}
+              className="bg-blue-500/10 text-blue-500 py-1 px-3 rounded-full text-sm hover:bg-blue-500/20 transition"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+        <div className="flex gap-2">
+          <button
+            onClick={() => openModal(project)}
+            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
+          >
+            View Details
+          </button>
+          {project.githubUrl && (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-gray-700 text-white py-2 px-4 rounded hover:bg-gray-600 transition"
+            >
+              View Project
+            </a>
+          )}
+        </div>
+      </div>
+    ));
   };
 
   return (
@@ -95,52 +150,30 @@ export const Projects = () => {
           <h2 className="text-3xl sm:text-4xl font-bold mb-8 bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent text-center">
             Featured Projects
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {projectData.map((project) => (
-              <div
-                key={project.id}
-                className="p-6 rounded-xl border border-white/10 hover:-translate-y-1 hover:border-blue-500/30 hover:shadow-lg transition"
-              >
-                <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-                {project.type && (
-                  <p className="text-sm text-gray-400 mb-2">
-                    {project.type}
-                    {project.company && ` - ${project.company}`}
-                  </p>
-                )}
-                <p className="text-gray-400 mb-4">{project.briefDescription}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.technologies &&
-                    project.technologies.map((tech, key) => (
-                      <span
-                        key={key}
-                        className="bg-blue-500/10 text-blue-500 py-1 px-3 rounded-full text-sm hover:bg-blue-500/20 transition"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                </div>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => openModal(project)}
-                    className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
-                  >
-                    View Details
-                  </button>
-                  {project.githubUrl && (
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-gray-700 text-white py-2 px-4 rounded hover:bg-gray-600 transition"
-                    >
-                      View Project
-                    </a>
-                  )}
-                </div>
+
+          {/* Company (Official) Projects */}
+          {companyProjects.length > 0 && (
+            <div className="mb-12">
+              <h3 className="text-2xl font-semibold text-white/90 mb-4">
+                Official / Company Projects
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {renderProjectCards(companyProjects)}
               </div>
-            ))}
-          </div>
+            </div>
+          )}
+
+          {/* Personal (Side) Projects */}
+          {personalProjects.length > 0 && (
+            <div>
+              <h3 className="text-2xl font-semibold text-white/90 mb-4">
+                Personal Projects
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {renderProjectCards(personalProjects)}
+              </div>
+            </div>
+          )}
         </div>
       </RevealOnScroll>
 
