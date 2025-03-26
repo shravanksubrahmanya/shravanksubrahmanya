@@ -23,7 +23,7 @@ export const Education = () => {
       yearEnd: "2019",
       gpa: "7.4/10.0",
       achievements: [
-        "Member of Parliament at Campus Parliament - University Competition",
+        "MP at Campus Parliament - University Competition",
         "Member of Rustrum Club",
       ],
     },
