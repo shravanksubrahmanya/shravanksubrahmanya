@@ -110,7 +110,7 @@ export const Projects = () => {
 
           {/* Personal Projects */}
           {personalProjects.length > 0 && (
-            <div>
+            <div className="mb-12">
               <h3 className="text-2xl font-semibold text-white/90 mb-4">
                 Personal Projects
               </h3>
@@ -119,6 +119,18 @@ export const Projects = () => {
               </div>
             </div>
           )}
+
+          {/* View More Projects Link */}
+          <div className="text-center mt-8">
+            <a
+              href="https://github.com/shravanksubrahmanya"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 hover:underline text-lg font-medium transition"
+            >
+              View More Projects →
+            </a>
+          </div>
         </div>
       </RevealOnScroll>
 
@@ -170,12 +182,6 @@ export const Projects = () => {
                     </span>
                   ))}
                 </div>
-              </div>
-            )}
-            {selectedProject.learnings && (
-              <div>
-                <h4 className="font-bold mb-2 text-white">Learnings:</h4>
-                <p className="text-gray-300">{selectedProject.learnings}</p>
               </div>
             )}
           </div>
