@@ -208,11 +208,17 @@ export const Projects = () => {
             {selectedProject.technologies && (
               <div className="mb-4">
                 <h4 className="font-bold mb-2">Technologies:</h4>
-                <ul className="list-disc list-inside">
+                {/* Display technologies as small cards (pills) */}
+                <div className="flex flex-wrap gap-2">
                   {selectedProject.technologies.map((tech, key) => (
-                    <li key={key}>{tech}</li>
+                    <span
+                      key={key}
+                      className="bg-blue-500/10 text-blue-500 py-1 px-3 rounded-full text-sm hover:bg-blue-500/20 transition"
+                    >
+                      {tech}
+                    </span>
                   ))}
-                </ul>
+                </div>
               </div>
             )}
             {selectedProject.learnings && (
