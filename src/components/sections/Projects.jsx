@@ -1,7 +1,7 @@
 // Projects.jsx
 import React, { useState } from "react";
 import { RevealOnScroll } from "../RevealOnScroll";
-import { projectData } from "./projectData"; // import the updated data
+import { projectData } from "./projectData"; // import the data
 
 export const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
@@ -30,8 +30,6 @@ export const Projects = () => {
         className="p-6 rounded-xl border border-white/10 hover:-translate-y-1 hover:border-blue-500/30 hover:shadow-lg transition"
       >
         <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-
-        {/* Type / Company / Client */}
         {project.type && (
           <p className="text-sm text-gray-400 mb-2">
             {project.type}
@@ -39,7 +37,6 @@ export const Projects = () => {
             {project.client && ` (Client: ${project.client})`}
           </p>
         )}
-
         <p className="text-gray-400 mb-4">{project.briefDescription}</p>
         <div className="flex flex-wrap gap-2 mb-4">
           {project.technologies?.map((tech, key) => (
@@ -76,10 +73,11 @@ export const Projects = () => {
   return (
     <section
       id="projects"
-      className="min-h-screen flex flex-col items-center justify-center py-20 px-4 sm:px-6 lg:px-8"
+      className="min-h-screen flex flex-col items-center justify-center py-20 w-full"
     >
       <RevealOnScroll>
-        <div className="max-w-5xl mx-auto">
+        {/* Outer container with responsive widths/padding */}
+        <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl sm:text-4xl font-bold mb-8 bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent text-center">
             Featured Projects
           </h2>
@@ -112,8 +110,22 @@ export const Projects = () => {
 
       {/* Modal Popup */}
       {selectedProject && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50">
-          <div className="relative bg-gradient-to-br from-gray-800 to-gray-900 border border-white/10 shadow-2xl p-6 rounded-lg max-w-xl w-full">
+        <div
+          className="
+            fixed inset-0 bg-black/50 backdrop-blur-sm z-50 
+            flex items-center justify-center 
+            px-4 sm:px-6
+          "
+        >
+          {/* Modal container with max height, scroll if needed */}
+          <div
+            className="
+              relative bg-gradient-to-br from-gray-800 to-gray-900 
+              border border-white/10 shadow-2xl p-6 rounded-lg 
+              max-w-xl w-full mx-auto
+              max-h-[90vh] overflow-y-auto
+            "
+          >
             <button
               onClick={closeModal}
               className="absolute top-3 right-3 text-2xl text-gray-300 hover:text-red-400 transition-colors"
