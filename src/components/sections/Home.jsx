@@ -94,7 +94,7 @@ export const Home = () => {
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center relative px-4 overflow-hidden"
+      className="min-h-screen flex items-center justify-center relative px-4 overflow-hidden pt-20 md:pt-0"
     >
       {/* ── Aurora Background Orbs ─────────────────────── */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
