@@ -1,62 +1,255 @@
 @import "tailwindcss";
 
+/* ─── Theme CSS Custom Properties ────────────────────── */
+:root {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #111111;
+  --bg-card: rgba(255, 255, 255, 0.04);
+  --bg-card-hover: rgba(255, 255, 255, 0.07);
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --border-hover: rgba(59, 130, 246, 0.3);
+  --nav-bg: rgba(10, 10, 10, 0.8);
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --scrollbar-track: #0a0a0a;
+  --shadow-color: rgba(0, 0, 0, 0.4);
+  --input-bg: rgba(255, 255, 255, 0.05);
+  --input-focus-bg: rgba(59, 130, 246, 0.05);
+  --neon-shadow: rgba(0, 0, 0, 0.4);
+  --loading-bg: linear-gradient(135deg, #0a0a0a 0%, #0f172a 50%, #0a0a0a 100%);
+  --modal-overlay: rgba(0, 0, 0, 0.5);
+}
+
+html.light {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-card: rgba(0, 0, 0, 0.03);
+  --bg-card-hover: rgba(0, 0, 0, 0.06);
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --border-hover: rgba(59, 130, 246, 0.4);
+  --nav-bg: rgba(248, 250, 252, 0.85);
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --scrollbar-track: #f8fafc;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --input-bg: rgba(0, 0, 0, 0.04);
+  --input-focus-bg: rgba(59, 130, 246, 0.06);
+  --neon-shadow: rgba(0, 0, 0, 0.15);
+  --loading-bg: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f8fafc 100%);
+  --modal-overlay: rgba(0, 0, 0, 0.3);
+}
+
 html,
 body {
   margin: 0;
   padding: 0;
   font-family: "Space Grotesk", sans-serif;
-  background: #0a0a0a;
-  color: #f3f4f6;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  scroll-behavior: smooth;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
-@layer utilities {
-  @keyframes blink {
-    0%,
-    100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0;
-    }
-  }
-  .animate-blink {
-    animation: blink 0.8s step-end infinite;
-  }
-
-  @keyframes loading {
-    0% {
-      transform: translateX(-100%);
-    }
-    100% {
-      transform: translateX(250%);
-    }
-  }
-  .animate-loading-bar {
-    animation: loading 0.8s ease infinite;
-  }
+/* ─── Custom Scrollbar ────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.4);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.7);
 }
 
+/* ─── Glassmorphism Utility ───────────────────────────── */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ─── Reveal on Scroll ────────────────────────────────── */
 .reveal {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.7s ease, transform 0.7s ease;
 }
-
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
+/* ─── Animations ──────────────────────────────────────── */
+@layer utilities {
+  /* Cursor blink */
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+  .animate-blink {
+    animation: blink 0.8s step-end infinite;
+  }
+
+  /* Loading bar */
+  @keyframes loading {
+    0%   { transform: translateX(-100%); }
+    100% { transform: translateX(250%); }
+  }
+  .animate-loading-bar {
+    animation: loading 0.8s ease infinite;
+  }
+
+  /* Floating blob / aurora orb */
+  @keyframes blob-float {
+    0%, 100% {
+      transform: translate(0px, 0px) scale(1);
+      opacity: 0.55;
+    }
+    33% {
+      transform: translate(30px, -50px) scale(1.08);
+      opacity: 0.7;
+    }
+    66% {
+      transform: translate(-20px, 20px) scale(0.95);
+      opacity: 0.5;
+    }
+  }
+  .animate-blob {
+    animation: blob-float 9s ease-in-out infinite;
+    will-change: transform;
+  }
+  .animation-delay-2000 { animation-delay: 2s; }
+  .animation-delay-4000 { animation-delay: 4s; }
+
+  /* Gentle pulse glow */
+  @keyframes glow-pulse {
+    0%, 100% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
+    50%       { box-shadow: 0 0 35px rgba(59, 130, 246, 0.6); }
+  }
+  .animate-glow-pulse {
+    animation: glow-pulse 3s ease-in-out infinite;
+  }
+
+  /* Counter count-up (for reference — driven by JS) */
+
+  /* Gradient border shimmer */
+  @keyframes border-shimmer {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .animate-border-shimmer {
+    background-size: 200% auto;
+    animation: border-shimmer 3s linear infinite;
+  }
+
+  /* Fade-up for staggered items */
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-up {
+    animation: fade-up 0.5s ease forwards;
+  }
+
+  /* Robot gentle vertical bob */
+  @keyframes robot-bob {
+    0%, 100% { transform: translateY(0px);  }
+    50%       { transform: translateY(-7px); }
+  }
+  .animate-robot-bob {
+    animation: robot-bob 3s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  /* Robot excited wiggle */
+  @keyframes robot-excited {
+    0%   { transform: rotate(-8deg) scale(1.05); }
+    100% { transform: rotate(8deg)  scale(1.12); }
+  }
+  .animate-robot-excited {
+    animation: robot-excited 0.35s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+
+  /* Antenna tip pulse */
+  @keyframes antenna-pulse {
+    0%, 100% { box-shadow: 0 0 4px 1px rgba(103,232,249,0.7); }
+    50%       { box-shadow: 0 0 10px 3px rgba(103,232,249,1);  }
+  }
+  .animate-antenna {
+    animation: antenna-pulse 1.6s ease-in-out infinite;
+  }
+
+  /* ── Robot Flight Animations ─────────────────────────── */
+
+  /* Squash on launch */
+  @keyframes squash-launch {
+    0%   { transform: scaleX(1.3) scaleY(0.7); }
+    100% { transform: scaleX(0.88) scaleY(1.12); }
+  }
+  .animate-squash-launch {
+    animation: squash-launch 0.12s ease-out forwards;
+  }
+
+  /* Bounce settle on landing */
+  @keyframes squash-land {
+    0%   { transform: scaleX(0.9) scaleY(1.1); }
+    40%  { transform: scaleX(1.18) scaleY(0.82); }
+    70%  { transform: scaleX(0.96) scaleY(1.04); }
+    100% { transform: scaleX(1) scaleY(1); }
+  }
+  .animate-squash-land {
+    animation: squash-land 0.4s ease-out forwards;
+  }
+
+  /* Trail particle fade */
+  @keyframes particle-fade {
+    0%   { opacity: 0.85; transform: translate(-50%,-50%) scale(1); }
+    100% { opacity: 0;    transform: translate(-50%,-50%) scale(0.15); }
+  }
+  .animate-particle-fade {
+    animation: particle-fade 0.8s ease-out forwards;
+    will-change: transform, opacity;
+  }
+
+  /* Sparkle burst on section arrive */
+  @keyframes sparkle-ring {
+    0%   { opacity: 0.9; transform: scale(0.6); }
+    100% { opacity: 0;   transform: scale(2.2); }
+  }
+  .animate-sparkle-ring {
+    animation: sparkle-ring 0.55s ease-out forwards;
+    pointer-events: none;
+  }
+}
+
+/* ─── Neon card border hover ──────────────────────────── */
+.neon-hover {
+  position: relative;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+.neon-hover:hover {
+  border-color: rgba(59, 130, 246, 0.5) !important;
+  box-shadow:
+    0 0 18px rgba(59, 130, 246, 0.25),
+    0 20px 40px var(--neon-shadow);
+  transform: translateY(-4px);
+}
+
+/* ─── Responsive base overrides ───────────────────────── */
 @media (max-width: 768px) {
-  h1 {
-    font-size: 2rem;
-  }
-  h2 {
-    font-size: 1.5rem;
-  }
-  .reveal {
-    transform: translateY(10px);
-  }
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.5rem; }
+  .reveal { transform: translateY(10px); }
 }
 
 form {
@@ -64,9 +257,308 @@ form {
   width: 80%;
   margin: 0 auto;
 }
-
 @media (max-width: 480px) {
-  form {
-    width: 75%;
-  }
+  form { width: 75%; }
+}
+
+/* ─── Light Theme Overrides ──────────────────────────── */
+html.light .glass {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.04);
+}
+
+/* ── Light mode text ─────────────────────────────────── */
+html.light .text-white {
+  color: var(--text-primary);
+}
+html.light .text-white\/90 {
+  color: var(--text-primary);
+}
+html.light .text-gray-100 {
+  color: #334155;
+}
+html.light .text-gray-200 {
+  color: #475569;
+}
+html.light .text-gray-300 {
+  color: #475569;
+}
+html.light .text-gray-400 {
+  color: #64748b;
+}
+html.light .text-gray-500 {
+  color: #64748b;
+}
+
+/* Accent text colors — stronger in light mode */
+html.light .text-blue-300 {
+  color: #2563eb;
+}
+html.light .text-blue-400 {
+  color: #2563eb;
+}
+html.light .text-blue-500 {
+  color: #2563eb;
+}
+html.light .text-cyan-400 {
+  color: #0891b2;
+}
+html.light .text-green-400 {
+  color: #16a34a;
+}
+html.light .text-green-500 {
+  color: #15803d;
+}
+html.light .text-purple-400 {
+  color: #7c3aed;
+}
+html.light .text-orange-300 {
+  color: #c2410c;
+}
+html.light .text-orange-400 {
+  color: #c2410c;
+}
+html.light .text-purple-300 {
+  color: #7c3aed;
+}
+html.light .text-sky-300 {
+  color: #0284c7;
+}
+html.light .text-cyan-300 {
+  color: #0e7490;
+}
+html.light .text-emerald-400 {
+  color: #059669;
+}
+html.light .text-yellow-400 {
+  color: #d97706;
+}
+
+/* ── Light mode hover text ───────────────────────────── */
+html.light .hover\:text-white:hover {
+  color: var(--text-primary);
+}
+html.light .hover\:text-gray-200:hover {
+  color: #334155;
+}
+html.light .hover\:text-gray-300:hover {
+  color: #475569;
+}
+html.light .group:hover .group-hover\:text-white {
+  color: var(--text-primary);
+}
+html.light .group:hover .group-hover\:text-blue-300 {
+  color: #2563eb;
+}
+html.light .group:hover .group-hover\:text-cyan-400 {
+  color: #0891b2;
+}
+
+/* ── Light mode backgrounds ──────────────────────────── */
+html.light .bg-black {
+  background-color: var(--bg-primary);
+}
+html.light .bg-black\/50 {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+html.light .bg-\[rgba\(10\,10\,10\,0\.8\)\] {
+  background: var(--nav-bg);
+}
+html.light .bg-white\/5 {
+  background: var(--bg-card);
+}
+html.light .hover\:bg-white\/\[0\.07\]:hover {
+  background: var(--bg-card-hover);
+}
+html.light .hover\:bg-white\/5:hover {
+  background: var(--bg-card-hover);
+}
+
+/* Accent backgrounds — lighter tints in light mode */
+html.light .bg-blue-500\/10 {
+  background: rgba(59, 130, 246, 0.1);
+}
+html.light .hover\:bg-blue-500\/10:hover {
+  background: rgba(59, 130, 246, 0.15);
+}
+html.light .hover\:bg-blue-500\/20:hover {
+  background: rgba(59, 130, 246, 0.18);
+}
+html.light .bg-emerald-500\/20 {
+  background: rgba(16, 185, 129, 0.12);
+}
+
+/* Modal background — glass style in light mode */
+html.light .from-gray-800 {
+  --tw-gradient-from: #f8fafc;
+}
+html.light .to-gray-900 {
+  --tw-gradient-to: #f1f5f9;
+}
+
+/* ── Light mode borders ──────────────────────────────── */
+html.light .border-white\/10 {
+  border-color: var(--border-color);
+}
+html.light .border-white\/15 {
+  border-color: rgba(0, 0, 0, 0.08);
+}
+html.light .border-white\/20 {
+  border-color: rgba(0, 0, 0, 0.12);
+}
+html.light .border-blue-500\/20 {
+  border-color: rgba(59, 130, 246, 0.25);
+}
+html.light .border-blue-500\/30 {
+  border-color: rgba(59, 130, 246, 0.35);
+}
+html.light .hover\:border-white\/20:hover {
+  border-color: rgba(0, 0, 0, 0.15);
+}
+html.light .hover\:border-blue-500\/30:hover {
+  border-color: rgba(59, 130, 246, 0.4);
+}
+html.light .hover\:border-blue-500\/40:hover {
+  border-color: rgba(59, 130, 246, 0.5);
+}
+html.light .hover\:border-blue-400\/50:hover {
+  border-color: rgba(59, 130, 246, 0.55);
+}
+html.light .hover\:border-blue-400:hover {
+  border-color: #3b82f6;
+}
+html.light .border-emerald-500\/30 {
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+/* Skill tag borders in light mode */
+html.light .border-green-500\/30 {
+  border-color: rgba(22, 163, 74, 0.35);
+}
+html.light .border-purple-500\/30 {
+  border-color: rgba(168, 85, 247, 0.35);
+}
+html.light .border-orange-500\/30 {
+  border-color: rgba(249, 115, 22, 0.35);
+}
+html.light .border-cyan-500\/30 {
+  border-color: rgba(6, 182, 212, 0.35);
+}
+html.light .border-sky-500\/30 {
+  border-color: rgba(14, 165, 233, 0.35);
+}
+html.light .border-blue-400\/30 {
+  border-color: rgba(96, 165, 250, 0.35);
+}
+
+/* ── Light mode gradient tag text — darken for readability ── */
+html.light .text-green-300 {
+  color: #15803d;
+}
+
+/* ── Light mode form inputs ──────────────────────────── */
+html.light input,
+html.light textarea {
+  background: var(--input-bg) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}
+html.light input:focus,
+html.light textarea:focus {
+  background: var(--input-focus-bg) !important;
+}
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* ── Light mode robot speech bubble ──────────────────── */
+html.light .glass p.text-white {
+  color: var(--text-primary);
+}
+
+/* ── Light mode gradient tag backgrounds — slightly stronger ── */
+html.light .from-blue-500\/20 {
+  --tw-gradient-from: rgba(59, 130, 246, 0.12);
+}
+html.light .to-cyan-500\/20 {
+  --tw-gradient-to: rgba(6, 182, 212, 0.12);
+}
+html.light .from-green-500\/20 {
+  --tw-gradient-from: rgba(22, 163, 74, 0.12);
+}
+html.light .to-emerald-500\/20 {
+  --tw-gradient-to: rgba(16, 185, 129, 0.12);
+}
+html.light .from-purple-500\/20 {
+  --tw-gradient-from: rgba(168, 85, 247, 0.12);
+}
+html.light .to-pink-500\/20 {
+  --tw-gradient-to: rgba(236, 72, 153, 0.12);
+}
+html.light .from-orange-500\/20 {
+  --tw-gradient-from: rgba(249, 115, 22, 0.12);
+}
+html.light .to-amber-500\/20 {
+  --tw-gradient-to: rgba(245, 158, 11, 0.12);
+}
+html.light .from-cyan-500\/20 {
+  --tw-gradient-from: rgba(6, 182, 212, 0.12);
+}
+html.light .to-teal-500\/20 {
+  --tw-gradient-to: rgba(20, 184, 166, 0.12);
+}
+html.light .from-sky-500\/20 {
+  --tw-gradient-from: rgba(14, 165, 233, 0.12);
+}
+html.light .to-blue-500\/20 {
+  --tw-gradient-to: rgba(59, 130, 246, 0.12);
+}
+html.light .from-blue-500\/10 {
+  --tw-gradient-from: rgba(59, 130, 246, 0.08);
+}
+html.light .to-cyan-500\/10 {
+  --tw-gradient-to: rgba(6, 182, 212, 0.08);
+}
+html.light .to-purple-500\/10 {
+  --tw-gradient-to: rgba(168, 85, 247, 0.08);
+}
+html.light .from-indigo-500\/20 {
+  --tw-gradient-from: rgba(99, 102, 241, 0.12);
+}
+html.light .to-indigo-500\/20 {
+  --tw-gradient-to: rgba(99, 102, 241, 0.12);
+}
+
+/* ── Light mode neon hover ───────────────────────────── */
+html.light .neon-hover:hover {
+  box-shadow:
+    0 0 18px rgba(59, 130, 246, 0.15),
+    0 20px 40px var(--neon-shadow);
+}
+
+/* ── Light mode aurora orbs — reduce opacity ─────────── */
+html.light .animate-blob {
+  opacity: 0.35;
+}
+
+/* ── Light mode category badges (blog) ───────────────── */
+html.light .bg-blue-500.text-white {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+
+/* ── Light mode button overrides ─────────────────────── */
+html.light .bg-blue-500.text-white {
+  color: #ffffff;
+}
+html.light .bg-gradient-to-r.from-blue-600.to-blue-500 .text-white,
+html.light .bg-gradient-to-r.from-blue-600.to-blue-500 {
+  color: #ffffff;
+}
+
+/* ── Light mode GitHub stat images ───────────────────── */
+html.light .shadow-lg {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
 }

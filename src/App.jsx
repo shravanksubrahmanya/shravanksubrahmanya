@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import "./index.css";
 
+import { ThemeProvider } from "./components/ThemeContext";
 import { LoadingScreen } from "./components/LoadingScreen";
 import { Navbar } from "./components/Navbar";
 import { MobileMenu } from "./components/MobileMenu";
@@ -14,13 +15,14 @@ import { Blogs } from "./components/sections/Blogs";
 import { Footer } from "./components/Footer";
 import { Education } from "./components/sections/Education";
 import { Experience } from "./components/sections/Experience";
+import { FloatingRobot } from "./components/FloatingRobot";
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <>
+    <ThemeProvider>
       {!isLoaded && <LoadingScreen onComplete={() => setIsLoaded(true)} />}
       <div
         className={`min-h-screen transition-opacity duration-700 ${
@@ -29,6 +31,7 @@ function App() {
       >
         <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
         <MobileMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+        <FloatingRobot />
         <main className="container mx-auto px-4 sm:px-6 lg:px-8">
           <Home />
           <About />
@@ -41,7 +44,7 @@ function App() {
           <Footer />
         </main>
       </div>
-    </>
+    </ThemeProvider>
   );
 }
 

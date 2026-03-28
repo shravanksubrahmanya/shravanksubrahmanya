@@ -1,5 +1,6 @@
 import { RevealOnScroll } from "../RevealOnScroll";
 import { FaGraduationCap } from "react-icons/fa";
+import { focusRobotOnCard } from "../../utils/robotEvents";
 
 export const Education = () => {
   const educationData = [
@@ -21,7 +22,7 @@ export const Education = () => {
       location: "Moodabidri",
       yearStart: "2016",
       yearEnd: "2019",
-      gpa: "7.4/10.0",
+      gpa: "7.38/10.0",
       achievements: [
         "MP at Campus Parliament - University Competition",
         "Member of Rustrum Club",
@@ -64,7 +65,14 @@ export const Education = () => {
                 </div>
 
                 <div
-                  className={`ml-12 sm:ml-0 p-6 bg-white/5 rounded-xl border border-white/10 hover:-translate-y-1 hover:border-blue-500/30 transition-all duration-300 flex-1 backdrop-blur-sm ${
+                  onClick={(e) =>
+                    focusRobotOnCard(
+                      e.currentTarget,
+                      `${edu.degree} — GPA: ${edu.gpa}`,
+                      "education"
+                    )
+                  }
+                  className={`ml-12 sm:ml-0 p-6 bg-white/5 rounded-xl border border-white/10 hover:-translate-y-1 hover:border-blue-500/30 transition-all duration-300 cursor-pointer flex-1 backdrop-blur-sm ${
                     index % 2 === 0 ? "sm:mr-16" : "sm:ml-16"
                   }`}
                 >

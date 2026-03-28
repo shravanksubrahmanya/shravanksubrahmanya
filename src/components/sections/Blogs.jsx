@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { focusRobotOnCard } from "../../utils/robotEvents";
 
 export const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
@@ -63,7 +64,7 @@ export const Blogs = () => {
   }, []);
 
   if (loading) {
-    return <div className="text-center text-gray-400">Loading blogs...</div>;
+    return <div className="text-center" style={{ color: "var(--text-muted)" }}>Loading blogs...</div>;
   }
 
   if (error) {
@@ -83,7 +84,14 @@ export const Blogs = () => {
           {blogs.map((blog, index) => (
             <div
               key={index}
-              className="p-6 rounded-xl border border-white/10 hover:-translate-y-1 hover:border-blue-500/30 hover:shadow-[0_2px_8px_rgba(59,130,246,0.2)] transition"
+              onClick={(e) =>
+                focusRobotOnCard(
+                  e.currentTarget,
+                  `Blog: ${blog.title.length > 40 ? blog.title.substring(0, 40) + "..." : blog.title}`,
+                  "blogs"
+                )
+              }
+              className="p-6 rounded-xl border border-white/10 hover:-translate-y-1 hover:border-blue-500/30 hover:shadow-[0_2px_8px_rgba(59,130,246,0.2)] transition cursor-pointer"
             >
               <a
                 href={blog.link}
@@ -113,7 +121,8 @@ export const Blogs = () => {
                     {blog.categories.map((cat, idx) => (
                       <span
                         key={idx}
-                        className="inline-block bg-blue-500 text-white text-xs px-2 py-1 mr-2 rounded-full"
+                        className="inline-block bg-blue-500 text-xs px-2 py-1 mr-2 rounded-full"
+                        style={{ color: "#ffffff" }}
                       >
                         {cat}
                       </span>

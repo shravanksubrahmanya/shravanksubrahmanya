@@ -41,7 +41,7 @@ export const Contact = () => {
           </h2>
 
           {/* Introductory Text */}
-          <p className="text-gray-300 text-center mb-8">
+          <p className="text-center mb-8" style={{ color: "var(--text-secondary)" }}>
             I’m always eager to explore new opportunities and take on exciting
             projects. If you have a project in mind, or just want to say hi,
             feel free to send me a message.
@@ -53,7 +53,7 @@ export const Contact = () => {
               name="name"
               required
               value={formData.name}
-              className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white transition focus:outline-none focus:border-blue-500 focus:bg-blue-500/5"
+              className="w-full rounded px-4 py-3 transition focus:outline-none focus:border-blue-500" style={{ background: "var(--input-bg)", borderWidth: 1, borderStyle: "solid", borderColor: "var(--border-color)", color: "var(--text-primary)" }}
               placeholder="Name..."
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
@@ -64,7 +64,7 @@ export const Contact = () => {
               name="email"
               required
               value={formData.email}
-              className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white transition focus:outline-none focus:border-blue-500 focus:bg-blue-500/5"
+              className="w-full rounded px-4 py-3 transition focus:outline-none focus:border-blue-500" style={{ background: "var(--input-bg)", borderWidth: 1, borderStyle: "solid", borderColor: "var(--border-color)", color: "var(--text-primary)" }}
               placeholder="youremail@domain.com"
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
@@ -75,7 +75,7 @@ export const Contact = () => {
               required
               rows={5}
               value={formData.message}
-              className="w-full bg-white/5 border border-white/10 rounded px-4 py-3 text-white transition focus:outline-none focus:border-blue-500 focus:bg-blue-500/5"
+              className="w-full rounded px-4 py-3 transition focus:outline-none focus:border-blue-500" style={{ background: "var(--input-bg)", borderWidth: 1, borderStyle: "solid", borderColor: "var(--border-color)", color: "var(--text-primary)" }}
               placeholder="Your Message..."
               onChange={(e) =>
                 setFormData({ ...formData, message: e.target.value })
@@ -83,7 +83,8 @@ export const Contact = () => {
             />
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white py-3 px-6 rounded font-medium transition hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(59,130,256,0.4)]"
+              className="w-full bg-blue-500 py-3 px-6 rounded font-medium transition hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(59,130,256,0.4)]"
+              style={{ color: "#ffffff" }}
             >
               Send Message
             </button>
@@ -105,7 +106,7 @@ export const Contact = () => {
               rel="noopener noreferrer"
               aria-label="Medium"
             >
-              <FaMedium className="text-white hover:text-gray-200 transition text-2xl md:text-4xl lg:text-5xl" />
+              <FaMedium className="transition text-2xl md:text-4xl lg:text-5xl" style={{ color: "var(--text-primary)" }} />
             </a>
             <a
               href="https://github.com/shravanksubrahmanya"
@@ -113,7 +114,7 @@ export const Contact = () => {
               rel="noopener noreferrer"
               aria-label="GitHub"
             >
-              <FaGithub className="text-white hover:text-gray-300 transition text-2xl md:text-4xl lg:text-5xl" />
+              <FaGithub className="transition text-2xl md:text-4xl lg:text-5xl" style={{ color: "var(--text-primary)" }} />
             </a>
             <a
               href="https://x.com/S_K_Subrahmanya"

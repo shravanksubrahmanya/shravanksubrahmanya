@@ -2,25 +2,131 @@
 
 export const projectData = [
   {
-    id: 1,
-    title: "Donyati Bot - Internal Web Application",
+    id: 13,
+    title: "CRM AI Agent – ONE EVA Platform",
     type: "Company Project",
-    company: "Donyati",
+    company: "Ecolab Digital Centre",
     briefDescription:
-      "Developed an internal web application that utilizes AI capabilities to assist employees by generating textual data and performing tasks.",
+      "Engineered a CRM-focused AI agent within the enterprise ONE EVA orchestration platform, enabling intelligent querying of Microsoft Dynamics 365 CRM data for 1000+ users across North America.",
     detailedDescription: `
-           <p>This project involved the following key aspects:</p>
-            <ul class="list-disc list-inside">
-              <li>Integrating AI capabilities with Azure services.</li>
-              <li>Developing a user-friendly interface with React.</li>
-              <li>Ensuring scalability with Azure Functions and Cosmos DB.</li>
-            </ul>
-            <p>The project improved internal workflows and enhanced productivity.</p>
-          `,
+      <p>Developed as part of the enterprise AI platform <strong>ONE EVA</strong> — a centralized orchestration system managing AI-driven workflows using an Agent-to-Agent (A2A) architecture.</p>
+      <p><strong>Key Achievements:</strong></p>
+      <ul class="list-disc list-inside">
+        <li>Engineered a CRM AI agent for intelligent querying of Microsoft Dynamics 365 data, supporting sales and leadership teams.</li>
+        <li>Designed and implemented AI workflows using LangGraph on Azure Databricks.</li>
+        <li>Optimized schema handling from JSON to CSV-based vector storage — achieving ~79% reduction in LLM token consumption and ~50% improvement in processing efficiency.</li>
+        <li>Delivered a production-grade solution selected over a Microsoft-developed CRM agent (Sales Chat) for superior performance.</li>
+        <li>Successfully deployed across North America with 1000+ active users including senior leadership.</li>
+        <li>Reduced manual CRM analytics effort by ~50% through intelligent automation.</li>
+        <li>Established end-to-end CI/CD pipelines using Databricks Asset Bundles (DAB) and Azure DevOps.</li>
+        <li>Integrated with Microsoft Teams via Azure Bot Service and Azure Functions.</li>
+        <li>Implemented full MLOps lifecycle using MLflow — covering development, deployment, monitoring, and observability.</li>
+      </ul>
+    `,
     technologies: [
-      "React",
+      "Azure Databricks",
+      "LangGraph",
+      "GPT Models",
+      "Azure Functions",
+      "Azure Bot Service",
+      "Azure Logic Apps",
+      "MLflow",
+      "Azure DevOps",
+      "Databricks Asset Bundles",
+      "Microsoft Dynamics 365",
+    ],
+    learnings:
+      "Gained deep expertise in enterprise-scale AI agent architecture, LangGraph orchestration, MLOps lifecycle management, and optimizing LLM token utilization in production systems.",
+  },
+  {
+    id: 14,
+    title: "Sales Training Buddy – AI-Powered Training Agent",
+    type: "Company Project",
+    company: "Ecolab Digital Centre",
+    briefDescription:
+      "Designing and developing an AI-powered sales training agent with a multi-agent architecture (Orchestrator, Researcher, Trainer, Role Play, Evaluator) integrated with Microsoft Copilot Studio and ONE EVA.",
+    detailedDescription: `
+      <p>An AI-powered sales training solution integrated with the ONE EVA platform, built in collaboration with Microsoft using Copilot Studio.</p>
+      <p><strong>Key Contributions:</strong></p>
+      <ul class="list-disc list-inside">
+        <li>Conceptualized and architected the end-to-end solution from scratch.</li>
+        <li>Designed a multi-agent architecture with 5 specialized agents: Orchestrator, Researcher, Trainer, Role Play, and Evaluator.</li>
+        <li>Developed custom AI agents (Trainer, Role Play, Evaluator) while integrating Microsoft-provided agents for orchestration and research.</li>
+        <li>Enabled automated research, guided training, simulated role-play, and performance evaluation workflows.</li>
+        <li>Adopted a hybrid architecture (Microsoft + custom-built), reducing development effort by ~30% and improving research accuracy by ~50%.</li>
+        <li>Deployed scalable services on Azure Databricks with MLOps practices using MLflow.</li>
+      </ul>
+      <p><em>Status: Ongoing</em></p>
+    `,
+    technologies: [
+      "Azure Databricks",
+      "Microsoft Copilot Studio",
+      "Azure Functions",
+      "Azure Bot Service",
+      "Azure Logic Apps",
+      "MLflow",
+      "LangGraph",
+    ],
+    learnings:
+      "Gained experience in multi-agent system design, Microsoft Copilot Studio integration, and building hybrid AI architectures combining enterprise and custom AI components.",
+  },
+  {
+    id: 15,
+    title: "ServiceNow AI Agent – Backend Integration System",
+    type: "Company Project",
+    company: "Ecolab Digital Centre",
+    briefDescription:
+      "Developed a standalone AI-powered backend system integrating with ServiceNow for automated ticket creation, lifecycle management, and intelligent query handling.",
+    detailedDescription: `
+      <p>A highly scalable AI-powered backend system enabling intelligent ServiceNow integration for automated IT service management workflows.</p>
+      <p><strong>Key Contributions:</strong></p>
+      <ul class="list-disc list-inside">
+        <li>Architected and implemented the end-to-end backend system ensuring scalability, security, and performance.</li>
+        <li>Built backend services using Azure Functions, Azure API Management, Azure Storage Accounts, and Azure Service Bus.</li>
+        <li>Enabled comprehensive CRUD operations, session management, and conversational context handling for AI-driven interactions.</li>
+        <li>Implemented robust authentication and security mechanisms using Azure API Management.</li>
+        <li>Designed asynchronous communication workflows using webhooks for efficient AI response handling.</li>
+        <li>Improved file upload performance by ~60% through pre-signed URL mechanisms.</li>
+        <li>Delivered solution within tight timelines through close collaboration with frontend, AI engineering, and ServiceNow teams.</li>
+      </ul>
+    `,
+    technologies: [
+      "Azure Functions",
+      "Azure API Management",
+      "Azure Storage Accounts",
+      "Azure Service Bus",
+      "Python",
+      "Webhooks",
+    ],
+    learnings:
+      "Deepened expertise in serverless backend architecture, asynchronous communication patterns, and enterprise service integrations with robust security and performance optimization.",
+  },
+  {
+    id: 1,
+    title: "DoAssist – Internal AI Platform",
+    type: "Company Project",
+    company: "Donyati India Private Ltd",
+    briefDescription:
+      "Led ~80% of the full-stack development of DoAssist, an internal AI platform built with React.js (Azure Static Web Apps) and Python (Azure Functions), featuring a large-scale RAG engine handling 50+ files.",
+    detailedDescription: `
+      <p>DoAssist is an internal AI productivity platform developed at Donyati, enabling employees to leverage Generative AI for tasks, document retrieval, and knowledge management.</p>
+      <p><strong>Key Achievements:</strong></p>
+      <ul class="list-disc list-inside">
+        <li>Delivered full-stack development contributing ~80% of the platform build.</li>
+        <li>Built React.js frontend deployed on Azure Static Web Apps and Python backend on Azure Functions.</li>
+        <li>Implemented AI workflows using Semantic Kernel, LangChain, and Azure AI Services — improving development speed by 50%.</li>
+        <li>Optimized data retrieval efficiency by 30% using Cosmos DB and Azure Storage.</li>
+        <li>Designed and delivered a large-scale RAG-based engine handling 50+ files, contributing to new client acquisition.</li>
+        <li>Reduced overall development time by 30% through streamlined architecture and reusable components.</li>
+      </ul>
+    `,
+    technologies: [
+      "React.js",
       "Python",
       "Azure Functions",
+      "Azure Static Web Apps",
+      "Semantic Kernel",
+      "LangChain",
       "Azure AI Services",
       "Azure Cosmos DB",
       "Azure Entra ID",
@@ -28,8 +134,41 @@ export const projectData = [
       "Azure Application Insights",
     ],
     learnings:
-      "Improved skills in AI integration, cloud services, and scalable application development.",
+      "Gained deep expertise in full-stack AI platform development, RAG system design, Semantic Kernel orchestration, and delivering enterprise AI solutions from concept to production.",
     githubUrl: "https://doassist.donyati.com/",
+  },
+  {
+    id: 16,
+    title: "IEEE Chatbot – Intelligent Document Retrieval",
+    type: "Company Project",
+    company: "Donyati India Private Ltd",
+    client: "IEEE",
+    briefDescription:
+      "Built an AI chatbot using LangGraph, FastAPI, and React.js enabling intelligent retrieval across 140+ technical documents and employee datasets, achieving ~89% answer accuracy.",
+    detailedDescription: `
+      <p>An enterprise-grade AI chatbot for IEEE enabling intelligent, context-aware retrieval across a large corpus of technical documents and employee knowledge bases.</p>
+      <p><strong>Key Achievements:</strong></p>
+      <ul class="list-disc list-inside">
+        <li>Built AI chatbot enabling intelligent retrieval across 140+ technical documents and employee datasets.</li>
+        <li>Improved response latency by ~35% through optimized backend architecture and retrieval mechanisms.</li>
+        <li>Achieved ~89% answer accuracy through advanced RAG implementation and retrieval optimization.</li>
+        <li>Developed backend services using FastAPI and contributed to React.js frontend modules.</li>
+        <li>Established CI/CD pipelines using AWS services including Amplify, App Runner, S3, and Bedrock.</li>
+      </ul>
+    `,
+    technologies: [
+      "LangGraph",
+      "FastAPI",
+      "React.js",
+      "AWS Amplify",
+      "AWS App Runner",
+      "AWS S3",
+      "AWS Bedrock",
+      "Python",
+      "RAG",
+    ],
+    learnings:
+      "Gained hands-on experience with LangGraph-based multi-step retrieval workflows, AWS cloud deployment pipelines, and optimizing RAG systems for high accuracy at scale.",
   },
   {
     id: 2,
