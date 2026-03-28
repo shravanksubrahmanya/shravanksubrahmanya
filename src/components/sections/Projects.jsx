@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { RevealOnScroll } from "../RevealOnScroll";
 import { projectData } from "./projectData";
 import { ProjectCard } from "./ProjectCard";
-import { ProjectModal } from "./ProjectModal";
 
 export const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
@@ -13,6 +12,13 @@ export const Projects = () => {
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  /* Listen for robot:project-close to clear local selection state */
+  useEffect(() => {
+    const onClose = () => setSelectedProject(null);
+    window.addEventListener("robot:project-close", onClose);
+    return () => window.removeEventListener("robot:project-close", onClose);
   }, []);
 
   const companyProjects = projectData.filter(
@@ -29,14 +35,9 @@ export const Projects = () => {
     setSelectedProject(project);
     window.dispatchEvent(
       new CustomEvent("robot:project-open", {
-        detail: { title: project.title, type: project.type },
+        detail: { project },
       })
     );
-  };
-
-  const closeModal = () => {
-    setSelectedProject(null);
-    window.dispatchEvent(new CustomEvent("robot:project-close"));
   };
 
   const ProjectGroup = ({ title, projects }) => {
@@ -86,8 +87,6 @@ export const Projects = () => {
       ) : (
         <RevealOnScroll>{content}</RevealOnScroll>
       )}
-
-      <ProjectModal project={selectedProject} onClose={closeModal} />
     </section>
   );
 };

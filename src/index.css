@@ -232,6 +232,17 @@ body {
   }
 }
 
+/* ─── Robot Detail Panel Animations ─────────────────────── */
+@keyframes panel-slide-up {
+  0%   { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes panel-fade-in {
+  0%   { opacity: 0; transform: translateY(-50%) scale(0.96); }
+  100% { opacity: 1; transform: translateY(-50%) scale(1); }
+}
+
 /* ─── Neon card border hover ──────────────────────────── */
 .neon-hover {
   position: relative;

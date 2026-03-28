@@ -135,7 +135,6 @@ export const projectData = [
     ],
     learnings:
       "Gained deep expertise in full-stack AI platform development, RAG system design, Semantic Kernel orchestration, and delivering enterprise AI solutions from concept to production.",
-    githubUrl: "https://doassist.donyati.com/",
   },
   {
     id: 16,
@@ -220,7 +219,6 @@ export const projectData = [
     ],
     learnings:
       "Enhanced full-stack development skills, gained experience in enterprise architecture, and improved team collaboration abilities.",
-    githubUrl: "https://ngsk.karnataka.gov.in",
   },
   {
     id: 4,

@@ -3,6 +3,7 @@ import { SECTIONS, MOBILE_WAYPOINTS } from "./robot/robotConfig";
 import { RobotFace } from "./robot/RobotFace";
 import { SpeechBubble } from "./robot/SpeechBubble";
 import { TrailParticles } from "./robot/TrailParticles";
+import { RobotDetailPanel } from "./robot/RobotDetailPanel";
 
 /* ── Main component ────────────────────────────────────────────── */
 export const FloatingRobot = () => {
@@ -12,7 +13,8 @@ export const FloatingRobot = () => {
   const prevPosRef = useRef({ left: 82, top: 18 });
 
   const [activeId, setActiveId] = useState("home");
-  const [robotState, setRobotState] = useState("idle"); // idle | excited
+  const [robotState, setRobotState] = useState("idle"); // idle | excited | presenting
+  const [presentingProject, setPresentingProject] = useState(null);
   const [motionPhase, setMotionPhase] = useState("idle"); // idle | launching | flying | landing
   const [direction, setDirection] = useState("none"); // left | right | none
   const [trail, setTrail] = useState([]);
@@ -173,29 +175,37 @@ export const FloatingRobot = () => {
     return () => observers.forEach((o) => o.disconnect());
   }, [flyTo]);
 
-  /* --- Project modal events ----------------------------------- */
+  /* --- Project presenting events ------------------------------- */
+  const closePresenting = useCallback(() => {
+    setPresentingProject(null);
+    setRobotState("idle");
+    setOverrideMsg(null);
+    const s = SECTIONS.find((s) => s.id === "projects");
+    if (s) {
+      const wp = isMobileRef.current
+        ? MOBILE_WAYPOINTS.projects
+        : s.waypoint;
+      flyTo(wp, s.message);
+    }
+    window.dispatchEvent(new CustomEvent("robot:project-close"));
+  }, [flyTo]);
+
   useEffect(() => {
     const onOpen = (e) => {
-      const msg = `Exploring: ${e.detail?.title ?? "project"}`;
-      setRobotState("excited");
-      setOverrideMsg(msg);
+      const project = e.detail?.project;
+      if (!project) return;
+      setPresentingProject(project);
+      setRobotState("presenting");
+      setOverrideMsg(null);
       flyTo(
         isMobileRef.current
-          ? { left: 50, top: 78 }
-          : { left: 50, top: 12 },
-        msg
+          ? { left: 50, top: 10 }
+          : { left: 15, top: 30 },
+        null
       );
     };
     const onClose = () => {
-      setRobotState("idle");
-      setOverrideMsg(null);
-      const s = SECTIONS.find((s) => s.id === "projects");
-      if (s) {
-        const wp = isMobileRef.current
-          ? MOBILE_WAYPOINTS.projects
-          : s.waypoint;
-        flyTo(wp, s.message);
-      }
+      closePresenting();
     };
     window.addEventListener("robot:project-open", onOpen);
     window.addEventListener("robot:project-close", onClose);
@@ -203,7 +213,7 @@ export const FloatingRobot = () => {
       window.removeEventListener("robot:project-open", onOpen);
       window.removeEventListener("robot:project-close", onClose);
     };
-  }, [flyTo]);
+  }, [flyTo, closePresenting]);
 
   /* --- Card-focus events (hover/click on any card) ------------ */
   const cardFocusTimerRef = useRef(null);
@@ -253,7 +263,11 @@ export const FloatingRobot = () => {
     top: (clientY / window.innerHeight) * 100,
   });
 
+  const presentingRef = useRef(false);
+  useEffect(() => { presentingRef.current = robotState === "presenting"; }, [robotState]);
+
   const onDragStart = useCallback((clientX, clientY) => {
+    if (presentingRef.current) return; // disable drag while presenting
     draggingRef.current = true;
     wasDragRef.current = false;
     dragStartRef.current = { x: clientX, y: clientY };
@@ -327,7 +341,7 @@ export const FloatingRobot = () => {
 
   /* --- Derived values ----------------------------------------- */
   const section = SECTIONS.find((s) => s.id === activeId) ?? SECTIONS[0];
-  const excited = robotState === "excited";
+  const excited = robotState === "excited" || robotState === "presenting";
   const bubbleText = overrideMsg ?? section.message;
   const glowRgb = excited ? "251,191,36" : section.glow;
   const gradient = excited
@@ -368,13 +382,15 @@ export const FloatingRobot = () => {
     }
   };
 
+  const presenting = robotState === "presenting";
+
   /* --- Render ------------------------------------------------- */
   return (
     <>
       <TrailParticles trail={trail} glowRgb={glowRgb} />
 
       {/* ── Mobile toast rendered OUTSIDE the transformed container so fixed positioning works ── */}
-      {isMobile && (
+      {isMobile && !presenting && (
         <SpeechBubble
           visible={bubbleVisible}
           bubbleOnRight={bubbleOnRight}
@@ -401,7 +417,7 @@ export const FloatingRobot = () => {
         }}
       >
         {/* Desktop bubble inside the container (absolute positioning) */}
-        {!isMobile && (
+        {!isMobile && !presenting && (
           <SpeechBubble
             visible={bubbleVisible}
             bubbleOnRight={bubbleOnRight}
@@ -483,6 +499,18 @@ export const FloatingRobot = () => {
           {section.label}
         </div>
       </div>
+
+      {/* ── Robot Detail Panel (rendered outside transformed container) ── */}
+      {presentingProject && (
+        <RobotDetailPanel
+          project={presentingProject}
+          onClose={closePresenting}
+          robotPos={pos}
+          isMobile={isMobile}
+          gradient={gradient}
+          glowRgb={glowRgb}
+        />
+      )}
     </>
   );
 };
