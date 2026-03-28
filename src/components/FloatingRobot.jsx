@@ -21,6 +21,9 @@ export const FloatingRobot = () => {
   const [bubbleVisible, setBubbleVisible] = useState(true);
   const [overrideMsg, setOverrideMsg] = useState(null);
   const [hovered, setHovered] = useState(false);
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" && window.innerWidth < 768
+  );
 
   /* --- Refs --------------------------------------------------- */
   const hideTimerRef = useRef(null);
@@ -31,6 +34,15 @@ export const FloatingRobot = () => {
     typeof window !== "undefined" && window.innerWidth < 768
   );
 
+  // Drag refs
+  const draggingRef = useRef(false);
+  const dragStartRef = useRef({ x: 0, y: 0 });
+  const dragStartPosRef = useRef({ left: 0, top: 0 });
+  const wasDragRef = useRef(false);
+
+  // Read-messages tracking — messages the user has dismissed
+  const readMessagesRef = useRef(new Set());
+
   // Sync hoveredRef
   useEffect(() => {
     hoveredRef.current = hovered;
@@ -39,14 +51,19 @@ export const FloatingRobot = () => {
   // Track mobile resize
   useEffect(() => {
     const onResize = () => {
-      isMobileRef.current = window.innerWidth < 768;
+      const mobile = window.innerWidth < 768;
+      isMobileRef.current = mobile;
+      setIsMobile(mobile);
     };
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
   /* --- Show bubble with auto-hide ----------------------------- */
-  const showBubble = useCallback((delay = 4500) => {
+  const showBubble = useCallback((msg, delay = 4500) => {
+    // If the user already dismissed this exact message, don't auto-show it
+    if (msg && readMessagesRef.current.has(msg)) return;
+
     setBubbleVisible(true);
     clearTimeout(hideTimerRef.current);
     hideTimerRef.current = setTimeout(() => {
@@ -56,7 +73,7 @@ export const FloatingRobot = () => {
 
   /* --- Fly to position ---------------------------------------- */
   const flyTo = useCallback(
-    (newPos) => {
+    (newPos, upcomingMsg) => {
       const from = posRef.current;
 
       // Skip if already there
@@ -121,7 +138,7 @@ export const FloatingRobot = () => {
 
       const t3 = setTimeout(() => {
         setMotionPhase("idle");
-        showBubble(4500);
+        showBubble(upcomingMsg, 4500);
       }, 1200);
 
       motionTimersRef.current = [t1, t2, t3];
@@ -132,7 +149,7 @@ export const FloatingRobot = () => {
   /* --- Section detection -------------------------------------- */
   useEffect(() => {
     const observers = [];
-    SECTIONS.forEach(({ id, waypoint }) => {
+    SECTIONS.forEach(({ id, waypoint, message }) => {
       const el = document.getElementById(id);
       if (!el) return;
       const obs = new IntersectionObserver(
@@ -145,7 +162,7 @@ export const FloatingRobot = () => {
             const wp = isMobileRef.current
               ? MOBILE_WAYPOINTS[id]
               : waypoint;
-            flyTo(wp);
+            flyTo(wp, message);
           }
         },
         { threshold: 0.35, rootMargin: "-80px 0px" }
@@ -159,12 +176,14 @@ export const FloatingRobot = () => {
   /* --- Project modal events ----------------------------------- */
   useEffect(() => {
     const onOpen = (e) => {
+      const msg = `Exploring: ${e.detail?.title ?? "project"}`;
       setRobotState("excited");
-      setOverrideMsg(`Exploring: ${e.detail?.title ?? "project"}`);
+      setOverrideMsg(msg);
       flyTo(
         isMobileRef.current
           ? { left: 50, top: 78 }
-          : { left: 50, top: 12 }
+          : { left: 50, top: 12 },
+        msg
       );
     };
     const onClose = () => {
@@ -175,7 +194,7 @@ export const FloatingRobot = () => {
         const wp = isMobileRef.current
           ? MOBILE_WAYPOINTS.projects
           : s.waypoint;
-        flyTo(wp);
+        flyTo(wp, s.message);
       }
     };
     window.addEventListener("robot:project-open", onOpen);
@@ -201,9 +220,10 @@ export const FloatingRobot = () => {
         }
       }
 
+      const msg = message || "Check this out!";
       setRobotState("excited");
-      setOverrideMsg(message || "Check this out!");
-      flyTo({ left, top });
+      setOverrideMsg(msg);
+      flyTo({ left, top }, msg);
 
       // Return to idle after a delay
       clearTimeout(cardFocusTimerRef.current);
@@ -226,6 +246,75 @@ export const FloatingRobot = () => {
       setBubbleVisible(true);
     }
   }, [hovered]);
+
+  /* --- Drag handlers ------------------------------------------ */
+  const getPointerVwVh = (clientX, clientY) => ({
+    left: (clientX / window.innerWidth) * 100,
+    top: (clientY / window.innerHeight) * 100,
+  });
+
+  const onDragStart = useCallback((clientX, clientY) => {
+    draggingRef.current = true;
+    wasDragRef.current = false;
+    dragStartRef.current = { x: clientX, y: clientY };
+    dragStartPosRef.current = { ...posRef.current };
+  }, []);
+
+  const onDragMove = useCallback((clientX, clientY) => {
+    if (!draggingRef.current) return;
+
+    // Only count as drag if pointer moved more than 5px from start
+    const dx = clientX - dragStartRef.current.x;
+    const dy = clientY - dragStartRef.current.y;
+    if (!wasDragRef.current && Math.abs(dx) + Math.abs(dy) > 5) {
+      wasDragRef.current = true;
+    }
+
+    if (wasDragRef.current) {
+      const newPos = getPointerVwVh(clientX, clientY);
+      // Clamp within viewport
+      newPos.left = Math.max(3, Math.min(97, newPos.left));
+      newPos.top = Math.max(3, Math.min(97, newPos.top));
+      posRef.current = newPos;
+      setPos(newPos);
+      setMotionPhase("idle");
+    }
+  }, []);
+
+  const onDragEnd = useCallback(() => {
+    draggingRef.current = false;
+  }, []);
+
+  // Mouse drag handlers
+  useEffect(() => {
+    const onMouseMove = (e) => onDragMove(e.clientX, e.clientY);
+    const onMouseUp = () => onDragEnd();
+
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+    return () => {
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+    };
+  }, [onDragMove, onDragEnd]);
+
+  // Touch drag handlers
+  useEffect(() => {
+    const onTouchMove = (e) => {
+      if (!draggingRef.current) return;
+      e.preventDefault();
+      const touch = e.touches[0];
+      onDragMove(touch.clientX, touch.clientY);
+    };
+    const onTouchEnd = () => onDragEnd();
+
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("touchend", onTouchEnd);
+    return () => {
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+    };
+  }, [onDragMove, onDragEnd]);
 
   /* --- Cleanup ------------------------------------------------ */
   useEffect(
@@ -250,18 +339,51 @@ export const FloatingRobot = () => {
     direction === "right" ? 18 : direction === "left" ? -18 : 0;
 
   const bodyAnim =
-    motionPhase === "launching"
-      ? "animate-squash-launch"
-      : motionPhase === "landing"
-        ? "animate-squash-land"
-        : excited
-          ? "animate-robot-excited"
-          : "animate-robot-bob";
+    draggingRef.current
+      ? "" // no bob animation while dragging
+      : motionPhase === "launching"
+        ? "animate-squash-launch"
+        : motionPhase === "landing"
+          ? "animate-squash-land"
+          : excited
+            ? "animate-robot-excited"
+            : "animate-robot-bob";
+
+  /* --- Click handler (distinguish from drag) ------------------ */
+  const handleClick = () => {
+    if (wasDragRef.current) return; // was a drag, not a click
+
+    if (bubbleVisible) {
+      // User clicked to dismiss → mark this message as read
+      readMessagesRef.current.add(bubbleText);
+      setBubbleVisible(false);
+      clearTimeout(hideTimerRef.current);
+    } else {
+      // User clicked to see the message → show it (even if previously read)
+      setBubbleVisible(true);
+      clearTimeout(hideTimerRef.current);
+      hideTimerRef.current = setTimeout(() => {
+        if (!hoveredRef.current) setBubbleVisible(false);
+      }, 4500);
+    }
+  };
 
   /* --- Render ------------------------------------------------- */
   return (
     <>
       <TrailParticles trail={trail} glowRgb={glowRgb} />
+
+      {/* ── Mobile toast rendered OUTSIDE the transformed container so fixed positioning works ── */}
+      {isMobile && (
+        <SpeechBubble
+          visible={bubbleVisible}
+          bubbleOnRight={bubbleOnRight}
+          gradient={gradient}
+          label={section.label}
+          text={bubbleText}
+          isMobile
+        />
+      )}
 
       {/* ── Robot container (flies across screen) ─────── */}
       <div
@@ -271,32 +393,41 @@ export const FloatingRobot = () => {
           top: `${pos.top}vh`,
           transform: "translate(-50%,-50%)",
           transition:
-            motionPhase === "flying" || motionPhase === "landing"
-              ? "left 0.9s cubic-bezier(0.34,1.56,0.64,1), top 0.9s cubic-bezier(0.34,1.56,0.64,1)"
-              : "none",
+            draggingRef.current
+              ? "none"
+              : motionPhase === "flying" || motionPhase === "landing"
+                ? "left 0.9s cubic-bezier(0.34,1.56,0.64,1), top 0.9s cubic-bezier(0.34,1.56,0.64,1)"
+                : "none",
         }}
       >
-        <SpeechBubble
-          visible={bubbleVisible}
-          bubbleOnRight={bubbleOnRight}
-          gradient={gradient}
-          label={section.label}
-          text={bubbleText}
-        />
+        {/* Desktop bubble inside the container (absolute positioning) */}
+        {!isMobile && (
+          <SpeechBubble
+            visible={bubbleVisible}
+            bubbleOnRight={bubbleOnRight}
+            gradient={gradient}
+            label={section.label}
+            text={bubbleText}
+            isMobile={false}
+          />
+        )}
 
         {/* ── Robot body ──────────────────────────────── */}
         <div
-          className={`relative w-[52px] h-[52px] rounded-full cursor-pointer select-none
+          className={`relative w-[52px] h-[52px] rounded-full cursor-grab select-none
             bg-gradient-to-br ${gradient} pointer-events-auto`}
           style={{
             boxShadow: `0 0 20px rgba(${glowRgb},0.55), 0 0 40px rgba(${glowRgb},0.22), 0 6px 24px rgba(0,0,0,0.5)`,
             transform: `rotate(${tiltDeg}deg) ${hovered ? "scale(1.18)" : "scale(1)"}`,
             transition: "transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease",
+            touchAction: "none",
           }}
           onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-          onClick={() => setBubbleVisible((v) => !v)}
-          title="Toggle guide"
+          onMouseLeave={() => { setHovered(false); }}
+          onMouseDown={(e) => { e.preventDefault(); onDragStart(e.clientX, e.clientY); }}
+          onTouchStart={(e) => { const t = e.touches[0]; onDragStart(t.clientX, t.clientY); }}
+          onClick={handleClick}
+          title="Drag me or click to toggle guide"
         >
           <div className={`w-full h-full ${bodyAnim}`}>
             <RobotFace excited={excited} />

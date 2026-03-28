@@ -162,8 +162,8 @@ export const Home = () => {
           Microsoft Certified Azure Developer &nbsp;·&nbsp; AZ-204
         </div>
 
-        {/* Heading */}
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-5 leading-tight tracking-tight">
+        {/* Heading — min-h prevents layout shift when typewriter text wraps to 2 lines on mobile */}
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-5 leading-tight tracking-tight min-h-[5.5rem] sm:min-h-[7rem] md:min-h-0">
           Hi, I&apos;m{" "}
           <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent">
             {displayText}
